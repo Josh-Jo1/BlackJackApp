@@ -5,5 +5,7 @@
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
     </style>
 
-    <style name="Theme.BlackJackApp" parent="Base.Theme.BlackJackApp" />
+    <style name="Theme.BlackJackApp" parent="Base.Theme.BlackJackApp">
+        <item name="android:windowBackground">@drawable/background</item>
+    </style>
 </resources>
