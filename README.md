@@ -1,5 +1,6 @@
 # BlackJackApp
 
+DEVELOPMENT IN PROGRESS
 
 ## Credits
 

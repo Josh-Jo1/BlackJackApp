@@ -2,4 +2,10 @@
     <string name="app_name">BlackJackApp</string>
     <string name="play">Play</string>
     <string name="settings">Settings</string>
+    <string name="standString">Stand</string>
+    <string name="hitString">Hit</string>
+    <string name="splitString">Split</string>
+    <string name="doubleString">Double</string>
+    <string name="leftHandedString">Left-Handed</string>
+    <string name="leftHandedSet">leftHandedSet</string>
 </resources>

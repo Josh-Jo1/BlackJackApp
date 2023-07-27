@@ -7,5 +7,7 @@
 
     <style name="Theme.BlackJackApp" parent="Base.Theme.BlackJackApp">
         <item name="android:windowBackground">@drawable/background</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="android:statusBarColor">@color/black</item>
     </style>
 </resources>
