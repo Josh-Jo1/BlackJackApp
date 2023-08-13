@@ -1,4 +1,4 @@
-package com.joshjo1.blackjackapp
+package com.joshjo1.blackjackapp.fragments
 
 import android.content.Context
 import android.os.Bundle
@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.widget.SwitchCompat
 import androidx.fragment.app.Fragment
+import com.joshjo1.blackjackapp.R
 
 class SettingsFragment : Fragment() {
 

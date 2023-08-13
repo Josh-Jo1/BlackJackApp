@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.joshjo1.blackjackapp.MainFragment"
+        android:name="com.joshjo1.blackjackapp.fragments.MainFragment"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
         <action
@@ -20,13 +20,13 @@
 
     <fragment
         android:id="@+id/playFragment"
-        android:name="com.joshjo1.blackjackapp.PlayFragment"
+        android:name="com.joshjo1.blackjackapp.fragments.PlayFragment"
         android:label="PlayFragment"
         tools:layout="@layout/fragment_play" />
 
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.joshjo1.blackjackapp.SettingsFragment"
+        android:name="com.joshjo1.blackjackapp.fragments.SettingsFragment"
         android:label="SettingsFragment"
         tools:layout="@layout/fragment_settings" />
 </navigation>

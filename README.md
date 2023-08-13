@@ -1,4 +1,4 @@
-# BlackJackApp
+# Black Jack App
 
 DEVELOPMENT IN PROGRESS
 
