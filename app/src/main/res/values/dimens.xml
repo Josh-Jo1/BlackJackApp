@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="controls_between">15dp</dimen>
+    <dimen name="controls_edge">40dp</dimen>
+</resources>
