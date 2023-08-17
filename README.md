@@ -2,8 +2,8 @@
 
 DEVELOPMENT IN PROGRESS
 
-Initially, I had Hand in GameViewModel as LiveData, which was then observed in PlayFragment and notified the recycler adapter \
-whenever the data set changed. However, I later changed to the current approach of simply having Hand as an object and \
+Initially, I had Hand in GameViewModel as LiveData, which was then observed in PlayFragment and notified the recycler adapter
+whenever the data set changed. However, I later changed to the current approach of simply having Hand as an object and
 notifying the recycler adapter more efficiently when the dataset changed (by providing the specific index).
 
 ## Credits
