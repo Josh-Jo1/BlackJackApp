@@ -1,4 +1,4 @@
-# Black Jack App
+# ![](app_icon_round.png) Black Jack App
 
 This is an implementation of the game Blackjack as an Android application.
 
