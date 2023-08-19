@@ -1,19 +1,56 @@
 # Black Jack App
 
-DEVELOPMENT IN PROGRESS
+This is an implementation of the game Blackjack as an Android application.
 
-Initially, I had Hand in GameViewModel as LiveData, which was then observed in PlayFragment and notified the recycler adapter
-whenever the data set changed. However, I later changed to the current approach of simply having Hand as an object and
+I took on this project to demonstrate my knowledge of Android application development gained from work experience and my studies
+in university. The project also gave me the chance to explore new components and techniques such as using a navigation graph and
+incorporating animations.
+
+## Structure
+
+The `Card` class contains all the information needed to identify a playing card. The `Shoe` class makes use of `Card` to initialize a
+standard deck of 52 playing cards, then takes an integer as input to determine how many decks will make the shoe. The `Hand` class
+maintains a list of `Card`s and its sum that a player has at any point.
+
+Currently, the `GameViewModel` creates a `Hand` instance for the dealer and player as well as an instance of the `Shoe`. The
+`PlayFragment` can then access the `Hand` for a player through the `GameViewModel` and perform operations such as "Hit" - adding the
+top `Card` from the `Shoe` to the `Hand`.
+
+Along with that, the `CardAdapter` class is used for the dealer's and player's cards to be displayed using `RecyclerView`s in the
+`PlayFragment`. This is also where the flipping card animation is performed when adding a new card.
+
+Then, there is the `SettingsFragment`, which allows the user to change between left- and right-handed modes, moving the action buttons 
+in `PlayFragment` to the appropriate side of the screen. The setting is stored using `SharedPreferences` and can therefore be restored
+after a kill and relaunch of the application.
+
+Lastly, the `MainFragment` and `MainActivity` bring everything together with the help of all the resources - drawables, layouts,
+navigation, and values. 
+
+Initially, I had Hand in `GameViewModel` as `LiveData`, which was then observed in `PlayFragment` and notified the recycler adapter
+whenever the data set changed. However, I later changed to the current approach of simply having `Hand` as an object and
 notifying the recycler adapter more efficiently when the dataset changed (by providing the specific index).
+
+## Features
+
+1. Play blackjack with hit and stand actions
+2. Switch between left- and right-handed modes
+3. Restart whenever and play as long as you like
+
+## Roadmap
+
+1. Display hand sum and message to indicate win or loss
+2. Add optimal strategy calculator
+3. Incorporate betting system
+4. Implement double and split actions
 
 ## Credits
 
-[Tiled Background Image](https://static.vecteezy.com/system/resources/previews/002/582/114/non_2x/modern-abstract-casino-background-with-shiny-blue-playing-cards-signs-poker-symbols-on-black-background-casino-symbols-widescreen-wallpaper-vector.jpg)\
+[Tiled Background Image](https://static.vecteezy.com/system/resources/previews/002/582/114/non_2x/modern-abstract-casino-background-with-shiny-blue-playing-cards-signs-poker-symbols-on-black-background-casino-symbols-widescreen-wallpaper-vector.jpg) \
 [Table Image](https://www.nicepng.com/ourpic/u2w7q8o0a9a9u2q8_poker-table-png-poker-table-online/)
 
 [Card Images](https://code.google.com/archive/p/vector-playing-cards/downloads)
 
 [Card Flip Animation](https://medium.com/geekculture/how-to-add-card-flip-animation-in-the-android-app-3060afeadd45)
 
-[Play Icon](https://www.flaticon.com/free-icon/play-button-arrowhead_27223)
+[Play Icon](https://www.flaticon.com/free-icon/play-button-arrowhead_27223) \
 [Refresh Icon](https://www.flaticon.com/free-icon/refresh-buttons_16498)
