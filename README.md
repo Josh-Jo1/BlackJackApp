@@ -14,3 +14,6 @@ notifying the recycler adapter more efficiently when the dataset changed (by pro
 [Card Images](https://code.google.com/archive/p/vector-playing-cards/downloads)
 
 [Card Flip Animation](https://medium.com/geekculture/how-to-add-card-flip-animation-in-the-android-app-3060afeadd45)
+
+[Play Icon](https://www.flaticon.com/free-icon/play-button-arrowhead_27223)
+[Refresh Icon](https://www.flaticon.com/free-icon/refresh-buttons_16498)

@@ -2,4 +2,5 @@
 <resources>
     <dimen name="controls_between">15dp</dimen>
     <dimen name="controls_edge">40dp</dimen>
+    <dimen name="start">25dp</dimen>
 </resources>

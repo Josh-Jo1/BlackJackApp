@@ -12,8 +12,17 @@ class GameViewModel : ViewModel() {
 
     fun getDealerCards() = dealer.getCards()
     fun isDealerBust() = dealer.isBust()
+    fun getDealerSum() = dealer.sum
     fun getPlayerCards() = player.getCards()
     fun isPlayerBust() = player.isBust()
+    fun getPlayerSum() = player.sum
+
+    /**
+     * Dealer hits
+     */
+    fun dealerHit() {
+        dealer.addCard(shoe.getTopCard())
+    }
 
     /**
      * Player hits
@@ -23,11 +32,10 @@ class GameViewModel : ViewModel() {
     }
 
     /**
-     * Dealer's turn, performed automatically
+     * Reset the GameViewModel
      */
-    fun dealerTurn() {
-        while (dealer.sum < player.sum) {
-            dealer.addCard(shoe.getTopCard())
-        }
+    fun reset() {
+        dealer.reset()
+        player.reset()
     }
 }

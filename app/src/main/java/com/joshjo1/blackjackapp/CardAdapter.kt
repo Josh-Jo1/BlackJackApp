@@ -30,6 +30,7 @@ class CardAdapter(private val cards: List<Card>) : RecyclerView.Adapter<CardAdap
         holder.backView.setImageResource(R.drawable.card_back)
         val id = context.resources.getIdentifier(cards[position].id, "drawable", context.packageName)
         holder.frontView.setImageResource(id)
+        holder.frontView.contentDescription = cards[position].id.replace('_', ' ')
 
         // Animate flipping new card added
         if (position > lastPosition) {
@@ -51,5 +52,13 @@ class CardAdapter(private val cards: List<Card>) : RecyclerView.Adapter<CardAdap
 
     override fun getItemCount(): Int {
         return cards.size
+    }
+
+    /**
+     * Reset the CardAdapter
+     */
+    fun reset() {
+        lastPosition = -1
+        notifyItemRangeRemoved(0, cards.size)
     }
 }

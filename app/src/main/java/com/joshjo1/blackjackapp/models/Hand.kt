@@ -37,9 +37,11 @@ class Hand {
     }
 
     /**
-     * Return all cards (to shoe) before next hand
+     * Reset the hand
      */
-    fun returnCards() {
+    fun reset() {
         cards.clear()
+        numAces = 0
+        sum = 0
     }
 }

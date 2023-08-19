@@ -8,4 +8,6 @@
     <string name="doubleString">Double</string>
     <string name="leftHandedString">Left-Handed</string>
     <string name="leftHandedSet">leftHandedSet</string>
+    <string name="start">Start</string>
+    <string name="restart">Restart</string>
 </resources>

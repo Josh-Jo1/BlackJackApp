@@ -2,10 +2,13 @@ package com.joshjo1.blackjackapp.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
@@ -17,26 +20,38 @@ import com.joshjo1.blackjackapp.GameViewModel
 
 class PlayFragment : Fragment() {
 
+    private lateinit var viewModel: GameViewModel
+    private lateinit var dealerView: RecyclerView
+    private lateinit var dealerAdapter: CardAdapter
+    private lateinit var playerView: RecyclerView
+    private lateinit var playerAdapter: CardAdapter
+    private lateinit var standButton: Button
+    private lateinit var hitButton: Button
+    private lateinit var splitButton: Button
+    private lateinit var doubleButton: Button
+
+    private val handler = Handler(Looper.getMainLooper())
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val sharedPref = requireActivity().getPreferences(Context.MODE_PRIVATE)
         val view = inflater.inflate(R.layout.fragment_play, container, false)
 
-        val viewModel = ViewModelProvider(requireActivity())[GameViewModel::class.java]
+        viewModel = ViewModelProvider(requireActivity())[GameViewModel::class.java]
 
         // Set up dealer cards recycler view
-        val dealerView = view.findViewById<RecyclerView>(R.id.dealerCardsView)
-        val dealerAdapter = CardAdapter(viewModel.getDealerCards())
+        dealerView = view.findViewById(R.id.dealerCardsView)
+        dealerAdapter = CardAdapter(viewModel.getDealerCards())
         dealerView.adapter = dealerAdapter
 
         // Set up player cards recycler view
-        val playerView = view.findViewById<RecyclerView>(R.id.playerCardsView)
-        val playerAdapter = CardAdapter(viewModel.getPlayerCards())
+        playerView = view.findViewById(R.id.playerCardsView)
+        playerAdapter = CardAdapter(viewModel.getPlayerCards())
         playerView.adapter = playerAdapter
 
-        val standButton = view.findViewById<Button>(R.id.standButton)
-        val hitButton = view.findViewById<Button>(R.id.hitButton)
-        val splitButton = view.findViewById<Button>(R.id.splitButton)
-        val doubleButton = view.findViewById<Button>(R.id.doubleButton)
+        standButton = view.findViewById(R.id.standButton)
+        hitButton = view.findViewById(R.id.hitButton)
+        splitButton = view.findViewById(R.id.splitButton)
+        doubleButton = view.findViewById(R.id.doubleButton)
 
         // Change button positions if left handed setting on
         if (sharedPref.getBoolean(getString(R.string.leftHandedSet), false)) {
@@ -66,17 +81,76 @@ class PlayFragment : Fragment() {
             }
         }
 
+        // Set up start/restart button
+        val startButton = view.findViewById<ImageButton>(R.id.startButton)
+        startButton.setOnClickListener {
+            startButton.setBackgroundResource(R.drawable.refresh)
+            startButton.contentDescription = resources.getString(R.string.restart)
+
+            // Reset order matters
+            dealerAdapter.reset()
+            playerAdapter.reset()
+            viewModel.reset()
+
+            // Deal player
+            viewModel.playerHit()
+            playerAdapter.notifyItemInserted(0)
+            // Deal dealer
+            handler.postDelayed({
+                viewModel.dealerHit()
+                dealerAdapter.notifyItemInserted(0)
+            }, resources.getInteger(R.integer.card_flip_duration_half).toLong())
+            // Deal player
+            handler.postDelayed({
+                viewModel.playerHit()
+                playerAdapter.notifyItemInserted(1)
+                enableButtons(true)
+            }, resources.getInteger(R.integer.card_flip_duration_half).toLong() * 2)
+        }
+
+        standButton.setOnClickListener {
+            enableButtons(false)
+            dealerTurn()
+        }
+
         hitButton.setOnClickListener {
             viewModel.playerHit()
-            val position = viewModel.getPlayerCards().size - 1
-            playerAdapter.notifyItemInserted(position)
-            playerView.scrollToPosition(position)
+            val endPosition = viewModel.getPlayerCards().size - 1
+            playerAdapter.notifyItemInserted(endPosition)
+            playerView.scrollToPosition(endPosition)
 
             if (viewModel.isPlayerBust()) {
-                hitButton.isEnabled = false
+                enableButtons(false)
             }
         }
 
         return view
+    }
+
+    /**
+     * Dealer's turn
+     */
+    private fun dealerTurn() {
+        if (viewModel.getDealerSum() < viewModel.getPlayerSum()) {
+            val endPosition = viewModel.getDealerCards().size
+            handler.postDelayed({
+                viewModel.dealerHit()
+                dealerAdapter.notifyItemInserted(endPosition)
+                dealerView.scrollToPosition(endPosition)
+                dealerTurn()
+            }, resources.getInteger(R.integer.card_flip_duration_half).toLong() * (endPosition - 1))
+        }
+    }
+
+    /**
+     * Enable all action buttons
+     *
+     * @param enable true will enable buttons
+     */
+    private fun enableButtons(enable: Boolean) {
+        standButton.isEnabled = enable
+        hitButton.isEnabled = enable
+//        splitButton.isEnabled = enable
+//        doubleButton.isEnabled = enable
     }
 }
