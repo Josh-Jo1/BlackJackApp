@@ -6,6 +6,10 @@ I took on this project to demonstrate my knowledge of Android application develo
 in university. The project also gave me the chance to explore new components and techniques such as using a navigation graph and
 incorporating animations.
 
+| Main Screen          | Play Screen           | Settings Screen          |
+|----------------------|-----------------------|--------------------------|
+| ![](Screen-Main.png) | ![](Screen-Play.png)  | ![](Screen-Settings.png) |
+
 ## Structure
 
 The `Card` class contains all the information needed to identify a playing card. The `Shoe` class makes use of `Card` to initialize a
