@@ -4,6 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- Position dealer cards view based on screen size -->
+    <!-- Then anchor status and sum views to dealer cards view -->
+
+    <TextView
+        android:id="@+id/dealerStatusView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@id/dealerCardsView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/dealerCardsView"
         android:layout_width="0dp"
@@ -30,6 +42,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dealerCardsView" />
 
+    <!-- Position start button to middle of dealer and player cards view -->
     <ImageButton
         android:id="@+id/startButton"
         android:layout_width="@dimen/start"
@@ -40,6 +53,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/dealerCardsView" />
+
+    <!-- Position player cards view based on screen size -->
+    <!-- Then anchor sum and status views to player cards view -->
 
     <TextView
         android:id="@+id/playerSumView"
@@ -67,6 +83,15 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/playerStatusView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/playerCardsView" />
 
     <Button
         android:id="@+id/standButton"

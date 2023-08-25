@@ -6,9 +6,9 @@ I took on this project to demonstrate my knowledge of Android application develo
 in university. The project also gave me the chance to explore new components and techniques such as using a navigation graph and
 incorporating animations.
 
-| Main Screen          | Play Screen           | Settings Screen          |
-|----------------------|-----------------------|--------------------------|
-| ![](Screen-Main.png) | ![](Screen-Play.png)  | ![](Screen-Settings.png) |
+| Main Screen          | Play Screen          | Play Screen 2          | Settings Screen          |
+|----------------------|----------------------|------------------------|--------------------------|
+| ![](Screen-Main.png) | ![](Screen-Play.png) | ![](Screen-Play-2.png) | ![](Screen-Settings.png) |
 
 ## Structure
 
@@ -38,16 +38,15 @@ notifying the recycler adapter more efficiently when the dataset changed (by pro
 ## Features
 
 1. Play blackjack with hit and stand actions
-2. Display hand sums for each player
+2. Display hand sums for each player and a message to indicate winner/bust
 3. Switch between left- and right-handed modes
 4. Restart whenever and play as long as you like
 
 ## Roadmap
 
-1. Display a message to indicate win or loss
-2. Add optimal strategy calculator
-3. Incorporate betting system
-4. Implement double and split actions
+1. Add optimal strategy calculator
+2. Incorporate betting system
+3. Implement double and split actions
 
 ## Credits
 

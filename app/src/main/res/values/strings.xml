@@ -10,4 +10,6 @@
     <string name="leftHandedSet">leftHandedSet</string>
     <string name="start">Start</string>
     <string name="restart">Restart</string>
+    <string name="bust">BUST</string>
+    <string name="winner">WINNER</string>
 </resources>

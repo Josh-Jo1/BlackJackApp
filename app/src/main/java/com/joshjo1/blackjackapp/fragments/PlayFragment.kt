@@ -32,6 +32,9 @@ class PlayFragment : Fragment() {
     private lateinit var splitButton: Button
     private lateinit var doubleButton: Button
 
+    private lateinit var dealerStatusView: TextView
+    private lateinit var playerStatusView: TextView
+
     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -63,6 +66,10 @@ class PlayFragment : Fragment() {
             playerSumView.text = if (it == 0) "" else it.toString()
         }
         viewModel.getPlayerSum().observe(viewLifecycleOwner, playerSumObserver)
+
+        // Set up status views
+        dealerStatusView = view.findViewById<TextView>(R.id.dealerStatusView)
+        playerStatusView = view.findViewById<TextView>(R.id.playerStatusView)
 
         // Set up actions buttons
         standButton = view.findViewById(R.id.standButton)
@@ -107,6 +114,9 @@ class PlayFragment : Fragment() {
             dealerSumView.visibility = View.VISIBLE
             playerSumView.visibility = View.VISIBLE
 
+            dealerStatusView.text = ""
+            playerStatusView.text = ""
+
             // Reset order matters
             dealerAdapter.reset()
             playerAdapter.reset()
@@ -141,6 +151,7 @@ class PlayFragment : Fragment() {
 
             if (viewModel.isPlayerBust()) {
                 enableButtons(false)
+                playerStatusView.text = resources.getString(R.string.bust)
             }
         }
 
@@ -159,6 +170,12 @@ class PlayFragment : Fragment() {
                 dealerView.scrollToPosition(endPosition)
                 dealerTurn()
             }, resources.getInteger(R.integer.card_flip_duration_half).toLong() * (endPosition - 1))
+        } else {
+            if (viewModel.isDealerBust()) {
+                playerStatusView.text = resources.getString(R.string.winner)
+            } else {
+                dealerStatusView.text = resources.getString(R.string.winner)
+            }
         }
     }
 
