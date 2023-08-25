@@ -9,9 +9,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.joshjo1.blackjackapp.R
@@ -48,6 +50,21 @@ class PlayFragment : Fragment() {
         playerAdapter = CardAdapter(viewModel.getPlayerCards())
         playerView.adapter = playerAdapter
 
+        // Set up dealer sum view
+        val dealerSumView = view.findViewById<TextView>(R.id.dealerSumView)
+        val dealerSumObserver = Observer<Int> {
+            dealerSumView.text = if (it == 0) "" else it.toString()
+        }
+        viewModel.getDealerSum().observe(viewLifecycleOwner, dealerSumObserver)
+
+        // Set up player sum view
+        val playerSumView = view.findViewById<TextView>(R.id.playerSumView)
+        val playerSumObserver = Observer<Int> {
+            playerSumView.text = if (it == 0) "" else it.toString()
+        }
+        viewModel.getPlayerSum().observe(viewLifecycleOwner, playerSumObserver)
+
+        // Set up actions buttons
         standButton = view.findViewById(R.id.standButton)
         hitButton = view.findViewById(R.id.hitButton)
         splitButton = view.findViewById(R.id.splitButton)
@@ -86,6 +103,9 @@ class PlayFragment : Fragment() {
         startButton.setOnClickListener {
             startButton.setBackgroundResource(R.drawable.refresh)
             startButton.contentDescription = resources.getString(R.string.restart)
+
+            dealerSumView.visibility = View.VISIBLE
+            playerSumView.visibility = View.VISIBLE
 
             // Reset order matters
             dealerAdapter.reset()
@@ -131,7 +151,7 @@ class PlayFragment : Fragment() {
      * Dealer's turn
      */
     private fun dealerTurn() {
-        if (viewModel.getDealerSum() < viewModel.getPlayerSum()) {
+        if (viewModel.getDealerSum().value!! < viewModel.getPlayerSum().value!!) {
             val endPosition = viewModel.getDealerCards().size
             handler.postDelayed({
                 viewModel.dealerHit()

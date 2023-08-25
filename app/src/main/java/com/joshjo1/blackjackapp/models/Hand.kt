@@ -1,5 +1,7 @@
 package com.joshjo1.blackjackapp.models
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.joshjo1.blackjackapp.types.RankT
 
 class Hand {
@@ -8,21 +10,23 @@ class Hand {
 
     private val cards = mutableListOf<Card>()
     private var numAces = 0
-    var sum = 0
+    private var sum = MutableLiveData(0)
 
     fun getCards(): List<Card> = cards
 
+    fun getSum(): LiveData<Int> = sum
+
     /**
-     * Add card to hand and check if busted
+     * Add card to hand
      *
      * @param card to add
      */
     fun addCard(card: Card) {
         cards.add(card)
         if (card.rank == RankT.ACE) numAces++
-        sum += card.value
-        while (sum >= BUST && numAces > 0) {
-            sum -= 10   // ACE is now 1
+        sum.value = sum.value!! + card.value
+        while (sum.value!! >= BUST && numAces > 0) {
+            sum.value = sum.value!! - 10    // ACE is now 1
             numAces--
         }
     }
@@ -33,7 +37,7 @@ class Hand {
      * @return if hand is busted
      */
     fun isBust(): Boolean {
-        return sum >= BUST
+        return sum.value!! >= BUST
     }
 
     /**
@@ -42,6 +46,6 @@ class Hand {
     fun reset() {
         cards.clear()
         numAces = 0
-        sum = 0
+        sum.value = 0
     }
 }

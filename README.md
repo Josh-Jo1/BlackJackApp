@@ -14,7 +14,8 @@ incorporating animations.
 
 The `Card` class contains all the information needed to identify a playing card. The `Shoe` class makes use of `Card` to initialize a
 standard deck of 52 playing cards, then takes an integer as input to determine how many decks will make the shoe. The `Hand` class
-maintains a list of `Card`s and its sum that a player has at any point.
+maintains a list of `Card`s and its sum that a player has at any point. The sum is stored as `LiveData` and observed in the
+`PlayFragment` to seamlessly update the user interface.
 
 Currently, the `GameViewModel` creates a `Hand` instance for the dealer and player as well as an instance of the `Shoe`. The
 `PlayFragment` can then access the `Hand` for a player through the `GameViewModel` and perform operations such as "Hit" - adding the
@@ -37,12 +38,13 @@ notifying the recycler adapter more efficiently when the dataset changed (by pro
 ## Features
 
 1. Play blackjack with hit and stand actions
-2. Switch between left- and right-handed modes
-3. Restart whenever and play as long as you like
+2. Display hand sums for each player
+3. Switch between left- and right-handed modes
+4. Restart whenever and play as long as you like
 
 ## Roadmap
 
-1. Display hand sum and message to indicate win or loss
+1. Display a message to indicate win or loss
 2. Add optimal strategy calculator
 3. Incorporate betting system
 4. Implement double and split actions

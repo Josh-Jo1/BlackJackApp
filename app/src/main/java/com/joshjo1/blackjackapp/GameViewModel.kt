@@ -1,5 +1,6 @@
 package com.joshjo1.blackjackapp
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.joshjo1.blackjackapp.models.Hand
 import com.joshjo1.blackjackapp.models.Shoe
@@ -12,10 +13,10 @@ class GameViewModel : ViewModel() {
 
     fun getDealerCards() = dealer.getCards()
     fun isDealerBust() = dealer.isBust()
-    fun getDealerSum() = dealer.sum
+    fun getDealerSum(): LiveData<Int> = dealer.getSum()
     fun getPlayerCards() = player.getCards()
     fun isPlayerBust() = player.isBust()
-    fun getPlayerSum() = player.sum
+    fun getPlayerSum(): LiveData<Int> = player.getSum()
 
     /**
      * Dealer hits
