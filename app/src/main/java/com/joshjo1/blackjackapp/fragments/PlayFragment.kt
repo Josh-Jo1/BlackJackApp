@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
+import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
@@ -19,21 +20,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.joshjo1.blackjackapp.R
 import com.joshjo1.blackjackapp.CardAdapter
 import com.joshjo1.blackjackapp.GameViewModel
+import com.joshjo1.blackjackapp.StrategyCalculator
 
 class PlayFragment : Fragment() {
 
     private lateinit var viewModel: GameViewModel
     private lateinit var dealerView: RecyclerView
     private lateinit var dealerAdapter: CardAdapter
+    private lateinit var dealerStatusView: TextView
     private lateinit var playerView: RecyclerView
     private lateinit var playerAdapter: CardAdapter
+    private lateinit var playerStatusView: TextView
     private lateinit var standButton: Button
     private lateinit var hitButton: Button
     private lateinit var splitButton: Button
     private lateinit var doubleButton: Button
-
-    private lateinit var dealerStatusView: TextView
-    private lateinit var playerStatusView: TextView
+    private lateinit var hintButton: ImageButton
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -68,14 +70,15 @@ class PlayFragment : Fragment() {
         viewModel.getPlayerSum().observe(viewLifecycleOwner, playerSumObserver)
 
         // Set up status views
-        dealerStatusView = view.findViewById<TextView>(R.id.dealerStatusView)
-        playerStatusView = view.findViewById<TextView>(R.id.playerStatusView)
+        dealerStatusView = view.findViewById(R.id.dealerStatusView)
+        playerStatusView = view.findViewById(R.id.playerStatusView)
 
         // Set up actions buttons
         standButton = view.findViewById(R.id.standButton)
         hitButton = view.findViewById(R.id.hitButton)
         splitButton = view.findViewById(R.id.splitButton)
         doubleButton = view.findViewById(R.id.doubleButton)
+        hintButton = view.findViewById(R.id.hintButton)
 
         // Change button positions if left handed setting on
         if (sharedPref.getBoolean(getString(R.string.leftHandedSet), false)) {
@@ -101,6 +104,12 @@ class PlayFragment : Fragment() {
                 startToEnd = splitButton.id
                 endToStart = ConstraintLayout.LayoutParams.UNSET
                 marginStart = resources.getDimension(R.dimen.controls_between).toInt()
+                marginEnd = 0
+            }
+            hintButton.updateLayoutParams<ConstraintLayout.LayoutParams> {
+                startToStart = ConstraintLayout.LayoutParams.PARENT_ID
+                endToEnd = ConstraintLayout.LayoutParams.UNSET
+                marginStart = resources.getDimension(R.dimen.hint_end).toInt()
                 marginEnd = 0
             }
         }
@@ -155,6 +164,12 @@ class PlayFragment : Fragment() {
             }
         }
 
+        hintButton.setOnClickListener {
+            val strategy = StrategyCalculator.get(viewModel.getPlayerCards(),
+                viewModel.getPlayerSum().value!!, viewModel.isPlayerSoftSum(), viewModel.getDealerCards())
+            Toast.makeText(context, strategy, Toast.LENGTH_LONG).show()
+        }
+
         return view
     }
 
@@ -189,5 +204,6 @@ class PlayFragment : Fragment() {
         hitButton.isEnabled = enable
 //        splitButton.isEnabled = enable
 //        doubleButton.isEnabled = enable
+        hintButton.visibility = if (enable) View.VISIBLE else View.INVISIBLE
     }
 }

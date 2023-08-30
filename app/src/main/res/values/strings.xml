@@ -12,4 +12,5 @@
     <string name="restart">Restart</string>
     <string name="bust">BUST</string>
     <string name="winner">WINNER</string>
+    <string name="hint">Hint</string>
 </resources>

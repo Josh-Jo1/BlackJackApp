@@ -2,5 +2,8 @@
 <resources>
     <dimen name="controls_between">15dp</dimen>
     <dimen name="controls_edge">40dp</dimen>
-    <dimen name="start">25dp</dimen>
+    <dimen name="start_size">25dp</dimen>
+    <dimen name="hint_end">40dp</dimen>
+    <dimen name="hint_top">25dp</dimen>
+    <dimen name="hint_size">30dp</dimen>
 </resources>

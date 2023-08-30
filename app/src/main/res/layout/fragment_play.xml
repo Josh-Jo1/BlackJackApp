@@ -4,6 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageButton
+        android:id="@+id/hintButton"
+        android:layout_width="@dimen/hint_size"
+        android:layout_height="@dimen/hint_size"
+        android:layout_marginEnd="@dimen/hint_end"
+        android:layout_marginTop="@dimen/hint_top"
+        android:background="@drawable/bulb"
+        android:contentDescription="@string/hint"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <!-- Position dealer cards view based on screen size -->
     <!-- Then anchor status and sum views to dealer cards view -->
 
@@ -45,8 +57,8 @@
     <!-- Position start button to middle of dealer and player cards view -->
     <ImageButton
         android:id="@+id/startButton"
-        android:layout_width="@dimen/start"
-        android:layout_height="@dimen/start"
+        android:layout_width="@dimen/start_size"
+        android:layout_height="@dimen/start_size"
         android:background="@drawable/play"
         android:contentDescription="@string/start"
         app:layout_constraintBottom_toTopOf="@id/playerCardsView"

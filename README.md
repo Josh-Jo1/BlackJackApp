@@ -6,6 +6,9 @@ I took on this project to demonstrate my knowledge of Android application develo
 in university. The project also gave me the chance to explore new components and techniques such as using a navigation graph and
 incorporating animations.
 
+Since this is a single-player version, the dealer will continue to hit while the sum of player's cards are less than the sum of
+dealer's cards and the dealer has not yet bust.
+
 | Main Screen          | Play Screen          | Play Screen 2          | Settings Screen          |
 |----------------------|----------------------|------------------------|--------------------------|
 | ![](Screen-Main.png) | ![](Screen-Play.png) | ![](Screen-Play-2.png) | ![](Screen-Settings.png) |
@@ -38,15 +41,15 @@ notifying the recycler adapter more efficiently when the dataset changed (by pro
 ## Features
 
 1. Play blackjack with hit and stand actions
-2. Display hand sums for each player and a message to indicate winner/bust
-3. Switch between left- and right-handed modes
-4. Restart whenever and play as long as you like
+2. Ask for hint to get optimal strategy calculation
+3. Display hand sums for each player and a message to indicate winner/bust
+4. Switch between left- and right-handed modes
+5. Restart whenever and play as long as you like
 
 ## Roadmap
 
-1. Add optimal strategy calculator
-2. Incorporate betting system
-3. Implement double and split actions
+1. Incorporate betting system
+2. Implement double and split actions
 
 ## Credits
 
@@ -59,3 +62,7 @@ notifying the recycler adapter more efficiently when the dataset changed (by pro
 
 [Play Icon](https://www.flaticon.com/free-icon/play-button-arrowhead_27223) \
 [Refresh Icon](https://www.flaticon.com/free-icon/refresh-buttons_16498)
+
+[Optimal Strategy](https://www.beatingbonuses.com/bjstrategy.php?decks=6&soft17=hit&doubleon=any2cards&peek=off&das=on&surrender=no&opt=1&btn=Generate+Strategy)
+
+[Bulb Icon](https://www.flaticon.com/free-icon/bulb_11455502)

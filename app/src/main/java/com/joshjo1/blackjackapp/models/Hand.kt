@@ -13,8 +13,9 @@ class Hand {
     private var sum = MutableLiveData(0)
 
     fun getCards(): List<Card> = cards
-
+    fun isSoftSum() = numAces != 0
     fun getSum(): LiveData<Int> = sum
+    fun isBust() = sum.value!! >= BUST
 
     /**
      * Add card to hand
@@ -29,15 +30,6 @@ class Hand {
             sum.value = sum.value!! - 10    // ACE is now 1
             numAces--
         }
-    }
-
-    /**
-     * Returns if hand is busted
-     *
-     * @return if hand is busted
-     */
-    fun isBust(): Boolean {
-        return sum.value!! >= BUST
     }
 
     /**
