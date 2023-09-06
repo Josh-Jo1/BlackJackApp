@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.joshjo1.blackjackapp.types.RankT
 
-class Hand {
+class Hand(private val shoe: Shoe) {
 
     private val BUST = 22
 
@@ -18,11 +18,10 @@ class Hand {
     fun isBust() = sum.value!! >= BUST
 
     /**
-     * Add card to hand
-     *
-     * @param card to add
+     * Add card to hand from top of shoe
      */
-    fun addCard(card: Card) {
+    fun addCard() {
+        val card = shoe.getTopCard()
         cards.add(card)
         if (card.rank == RankT.ACE) numAces++
         sum.value = sum.value!! + card.value

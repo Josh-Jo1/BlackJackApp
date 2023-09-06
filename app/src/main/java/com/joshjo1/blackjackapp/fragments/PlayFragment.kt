@@ -47,12 +47,12 @@ class PlayFragment : Fragment() {
 
         // Set up dealer cards recycler view
         dealerView = view.findViewById(R.id.dealerCardsView)
-        dealerAdapter = CardAdapter(viewModel.getDealerCards())
+        dealerAdapter = CardAdapter(viewModel.dealer.getCards())
         dealerView.adapter = dealerAdapter
 
         // Set up player cards recycler view
         playerView = view.findViewById(R.id.playerCardsView)
-        playerAdapter = CardAdapter(viewModel.getPlayerCards())
+        playerAdapter = CardAdapter(viewModel.player.getCards())
         playerView.adapter = playerAdapter
 
         // Set up dealer sum view
@@ -60,14 +60,14 @@ class PlayFragment : Fragment() {
         val dealerSumObserver = Observer<Int> {
             dealerSumView.text = if (it == 0) "" else it.toString()
         }
-        viewModel.getDealerSum().observe(viewLifecycleOwner, dealerSumObserver)
+        viewModel.dealer.getSum().observe(viewLifecycleOwner, dealerSumObserver)
 
         // Set up player sum view
         val playerSumView = view.findViewById<TextView>(R.id.playerSumView)
         val playerSumObserver = Observer<Int> {
             playerSumView.text = if (it == 0) "" else it.toString()
         }
-        viewModel.getPlayerSum().observe(viewLifecycleOwner, playerSumObserver)
+        viewModel.player.getSum().observe(viewLifecycleOwner, playerSumObserver)
 
         // Set up status views
         dealerStatusView = view.findViewById(R.id.dealerStatusView)
@@ -132,16 +132,16 @@ class PlayFragment : Fragment() {
             viewModel.reset()
 
             // Deal player
-            viewModel.playerHit()
+            viewModel.player.addCard()
             playerAdapter.notifyItemInserted(0)
             // Deal dealer
             handler.postDelayed({
-                viewModel.dealerHit()
+                viewModel.dealer.addCard()
                 dealerAdapter.notifyItemInserted(0)
             }, resources.getInteger(R.integer.card_flip_duration_half).toLong())
             // Deal player
             handler.postDelayed({
-                viewModel.playerHit()
+                viewModel.player.addCard()
                 playerAdapter.notifyItemInserted(1)
                 enableButtons(true)
             }, resources.getInteger(R.integer.card_flip_duration_half).toLong() * 2)
@@ -153,20 +153,19 @@ class PlayFragment : Fragment() {
         }
 
         hitButton.setOnClickListener {
-            viewModel.playerHit()
-            val endPosition = viewModel.getPlayerCards().size - 1
+            viewModel.player.addCard()
+            val endPosition = viewModel.player.getCards().size - 1
             playerAdapter.notifyItemInserted(endPosition)
             playerView.scrollToPosition(endPosition)
 
-            if (viewModel.isPlayerBust()) {
+            if (viewModel.player.isBust()) {
                 enableButtons(false)
                 playerStatusView.text = resources.getString(R.string.bust)
             }
         }
 
         hintButton.setOnClickListener {
-            val strategy = StrategyCalculator.get(viewModel.getPlayerCards(),
-                viewModel.getPlayerSum().value!!, viewModel.isPlayerSoftSum(), viewModel.getDealerCards())
+            val strategy = StrategyCalculator.get(viewModel.player, viewModel.dealer)
             Toast.makeText(context, strategy, Toast.LENGTH_LONG).show()
         }
 
@@ -177,16 +176,16 @@ class PlayFragment : Fragment() {
      * Dealer's turn
      */
     private fun dealerTurn() {
-        if (viewModel.getDealerSum().value!! < viewModel.getPlayerSum().value!!) {
-            val endPosition = viewModel.getDealerCards().size
+        if (viewModel.dealer.getSum().value!! < viewModel.player.getSum().value!!) {
+            val endPosition = viewModel.dealer.getCards().size
             handler.postDelayed({
-                viewModel.dealerHit()
+                viewModel.dealer.addCard()
                 dealerAdapter.notifyItemInserted(endPosition)
                 dealerView.scrollToPosition(endPosition)
                 dealerTurn()
             }, resources.getInteger(R.integer.card_flip_duration_half).toLong() * (endPosition - 1))
         } else {
-            if (viewModel.isDealerBust()) {
+            if (viewModel.dealer.isBust()) {
                 playerStatusView.text = resources.getString(R.string.winner)
             } else {
                 dealerStatusView.text = resources.getString(R.string.winner)

@@ -7,31 +7,9 @@ import com.joshjo1.blackjackapp.models.Shoe
 class GameViewModel : ViewModel() {
 
     private val shoe = Shoe(6)
-    private val dealer = Hand()
-    private val player = Hand()
 
-    // these ensure addCard from Hand remains private to view model
-    fun getDealerCards() = dealer.getCards()
-    fun isDealerBust() = dealer.isBust()
-    fun getDealerSum() = dealer.getSum()
-    fun getPlayerCards() = player.getCards()
-    fun isPlayerBust() = player.isBust()
-    fun isPlayerSoftSum() = player.isSoftSum()
-    fun getPlayerSum() = player.getSum()
-
-    /**
-     * Dealer hits
-     */
-    fun dealerHit() {
-        dealer.addCard(shoe.getTopCard())
-    }
-
-    /**
-     * Player hits
-     */
-    fun playerHit() {
-        player.addCard(shoe.getTopCard())
-    }
+    val dealer = Hand(shoe)
+    val player = Hand(shoe)
 
     /**
      * Reset the GameViewModel

@@ -1,28 +1,25 @@
 package com.joshjo1.blackjackapp
 
-import com.joshjo1.blackjackapp.models.Card
+import com.joshjo1.blackjackapp.models.Hand
 
 object StrategyCalculator {
 
     /**
      * Determine best strategy for player
      *
-     * @param pCards player's cards
-     * @param pSum player's sum
-     * @param pSoft player soft sum
-     * @param dCards dealer's cards
-     * @return optimal strategy for player
+     * @param player player's hand
+     * @param dealer dealer's hand
      */
-    fun get(pCards: List<Card>, pSum: Int, pSoft: Boolean, dCards: List<Card>): String {
-        if (pCards.size < 2) return "ERROR"
-        if (dCards.size != 1) return "ERROR"
+    fun get(player: Hand, dealer: Hand): String {
+        if (player.getCards().size < 2) return "ERROR"
+        if (dealer.getCards().size != 1) return "ERROR"
 
-        val playerFirst = pCards[0]
-        val playerSecond = pCards[1]
-        val dealerVal = dCards[0].value
+        val playerFirst = player.getCards()[0]
+        val playerSecond = player.getCards()[1]
+        val dealerVal = dealer.getCards()[0].value
 
         // Pairs
-        if (pCards.size == 2 && playerFirst.rank == playerSecond.rank) {
+        if (player.getCards().size == 2 && playerFirst.rank == playerSecond.rank) {
             return when (playerFirst.value) {
                 2, 3, 6, 7 -> if (dealerVal <= 7) "Split" else "Hit"
                 4 -> if (dealerVal in 5..6) "Split" else "Hit"
@@ -36,8 +33,8 @@ object StrategyCalculator {
         }
 
         // Soft sum
-        if (pSoft) {
-            return when (pSum - 11) {
+        if (player.isSoftSum()) {
+            return when (player.getSum().value!! - 11) {
                 2, 3 -> if (dealerVal in 5..6) "Double" else "Hit"
                 4, 5, 6 -> if (dealerVal in 4..6) "Double" else "Hit"
                 7 -> if (dealerVal <= 6) "Double" else if (dealerVal <= 8) "Stand" else "Hit"
@@ -47,12 +44,12 @@ object StrategyCalculator {
         }
 
         // Everything else
-        return if (pSum <= 8) "Hit"
-        else if (pSum == 9) if (dealerVal <= 6) "Double" else "Hit"
-        else if (pSum <= 11) if (dealerVal <= 9) "Double" else "Hit"
-        else if (pSum == 12) if (dealerVal in 4..6) "Stand" else "Hit"
-        else if (pSum <= 16) if (dealerVal <= 6) "Stand" else "Hit"
-        else if (pSum <= 21) "Stand"
+        return if (player.getSum().value!! <= 8) "Hit"
+        else if (player.getSum().value!! == 9) if (dealerVal <= 6) "Double" else "Hit"
+        else if (player.getSum().value!! <= 11) if (dealerVal <= 9) "Double" else "Hit"
+        else if (player.getSum().value!! == 12) if (dealerVal in 4..6) "Stand" else "Hit"
+        else if (player.getSum().value!! <= 16) if (dealerVal <= 6) "Stand" else "Hit"
+        else if (player.getSum().value!! <= 21) "Stand"
         else "ERROR"
     }
 }
