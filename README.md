@@ -46,6 +46,11 @@ notifying the recycler adapter more efficiently when the dataset changed (by pro
 4. Switch between left- and right-handed modes
 5. Restart whenever and play as long as you like
 
+## Known Bugs
+
+1. Since using a ViewModel, going back and returning to `PlayFragment` does not restart the game
+2. Button text color is black on Samsung Galaxy S9 (tested on physical device)
+
 ## Roadmap
 
 1. Incorporate betting system
